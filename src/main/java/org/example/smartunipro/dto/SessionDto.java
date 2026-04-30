@@ -7,7 +7,9 @@ import org.example.smartunipro.model.SessionType;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class SessionDto {
@@ -39,12 +41,10 @@ public class SessionDto {
         @Size(min = 3, max = 100, message = "Session name must be between 3 and 100 characters")
         private String name;
 
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
         private String courseName;
 
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private String instructorName;
 
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private String locationName;
 }

@@ -6,13 +6,12 @@ import org.example.smartunipro.dto.MaterialDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.smartunipro.entity.Material;
 import org.example.smartunipro.service.MaterialServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/materials")
@@ -31,13 +30,13 @@ public class MaterialController {
 
     //  GET ALL
     @GetMapping
-    public ResponseEntity<Collection<Material>> getAll() {
-        return ResponseEntity.ok(services.getAll());
+    public ResponseEntity<List<MaterialDto>> getAllMaterial() {
+        return ResponseEntity.ok(services.getAllMaterial());
     }
 
     // GET BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<Material> getById(@PathVariable Long id) {
+    public ResponseEntity<MaterialDto> getMaterialById(@PathVariable Long id) {
         return ResponseEntity.ok(services.getById(id));
     }
 
@@ -56,3 +55,4 @@ public class MaterialController {
         return ResponseEntity.noContent().build();
     }
 }
+

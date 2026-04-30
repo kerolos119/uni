@@ -3,10 +3,12 @@ package org.example.smartunipro.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.smartunipro.model.EnrollmentStatus;
 
 import java.time.LocalDateTime;
+@Getter
+@Setter
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnrollmentDto {
@@ -20,6 +22,9 @@ public class EnrollmentDto {
     @NotNull(message = "Session ID is required")
     private Long sessionId;
 
-    private LocalDateTime contollmentDate;
+    private LocalDateTime EnrollmentDate;
+    private String studentName;
+    private String sessionName;
+    private EnrollmentStatus status;
 
 }

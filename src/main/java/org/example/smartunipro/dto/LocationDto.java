@@ -6,10 +6,11 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-@Data
+import lombok.*;
+
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocationDto {
@@ -32,8 +33,5 @@ private Long id;
         @DecimalMin(value = "-180.0", message = "Longitude must be between -180 and 180")
         @DecimalMax(value = "180.0", message = "Longitude must be between -180 and 180")
         private Double longitude;
-
-
-
 
 }

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentDto {

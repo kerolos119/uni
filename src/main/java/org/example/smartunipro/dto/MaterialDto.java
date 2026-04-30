@@ -5,10 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-@Data
+import lombok.*;
+
+
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaterialDto {
@@ -28,5 +30,8 @@ public class MaterialDto {
 
             @NotNull(message = "Course ID is required") //لازم يحدد الكورس الى تابع ليه
             private Long courseId;
+        @NotNull(message = "Course name is required") //لازم يحدد الكورس الى تابع ليه
+        private String courseName;
+
 
 }

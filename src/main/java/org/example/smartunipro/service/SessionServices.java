@@ -28,18 +28,19 @@ public class SessionServices {
         Session session = buildSessionFromDto(dto, new Session());
         return sessionMapper.toDto(sessionRepository.save(session));
     }
-
+    // GET ALL
     public List<SessionDto> getAllSessions() {
         return sessionRepository.findAll()
                 .stream()
                 .map(sessionMapper::toDto)
                 .collect(Collectors.toList());
     }
-
+    //  GET BY ID
     public SessionDto getById(Long id) {
         return sessionMapper.toDto(findOrThrow(id));
     }
 
+    //  UPDATE
     public SessionDto update(Long id, SessionDto dto) {
         Session session = findOrThrow(id);
         sessionMapper.updateToEntity(dto, session);
@@ -49,7 +50,7 @@ public class SessionServices {
         if (dto.getLocationId()   != null) session.setLocation(resolveLocation(dto.getLocationId()));
         return sessionMapper.toDto(sessionRepository.save(session));
     }
-
+    //  DELETE
     public void deleteById(Long id) {
         if (!sessionRepository.existsById(id)) {
             throw new CustomException("Session not found with id: " + id, HttpStatus.NOT_FOUND);

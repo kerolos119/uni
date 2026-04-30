@@ -31,10 +31,12 @@ public class SessionController {
     public ResponseEntity<List<SessionDto>> getAllSessions() {
         return ResponseEntity.ok(services.getAllSessions());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<SessionDto> getSessionById(@PathVariable Long id) {
         return ResponseEntity.ok(services.getById(id));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<SessionDto> update(
             @PathVariable Long id,

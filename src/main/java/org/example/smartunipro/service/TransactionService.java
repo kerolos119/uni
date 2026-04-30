@@ -27,7 +27,7 @@ public class TransactionService {
     }
     public Material saveMaterial(Material material) { return materialRepository.save(material); }
     public AIInteraction saveAIInteraction(AIInteraction interaction) {
-        interaction.setCreatedAt(LocalDateTime.now());
+
         return aiInteractionRepository.save(interaction);
     }
 }

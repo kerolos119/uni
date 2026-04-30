@@ -2,12 +2,15 @@ package org.example.smartunipro.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.example.smartunipro.model.Status;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttendanceDto {
@@ -30,15 +33,14 @@ public class AttendanceDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Status status;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
     private LocalDateTime timestamp;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
     private String studentName;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String sessionName;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Size(max = 500, message = "Message too long")
     private String message;
 }

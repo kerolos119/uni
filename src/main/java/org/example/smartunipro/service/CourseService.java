@@ -20,7 +20,7 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper     courseMapper;
-
+    //  CREATE
     public CourseDto createCourse(CourseDto dto) {
         if (courseRepository.existsByCode(dto.getCode())) {
             throw new CustomException(
@@ -30,21 +30,21 @@ public class CourseService {
         Course saved = courseRepository.save(courseMapper.toEntity(dto));
         return courseMapper.toDto(saved);
     }
-
+    //  GET ALL
     public List<CourseDto> getAllCourses() {
         return courseRepository.findAll()
                 .stream()
                 .map(courseMapper::toDto)
                 .collect(Collectors.toList());
     }
-
+    // GET BY ID
     public CourseDto getById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "Course not found with id: " + id, HttpStatus.NOT_FOUND));
         return courseMapper.toDto(course);
     }
-
+    //  UPDATE
     public CourseDto update(Long id, CourseDto dto) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
@@ -52,7 +52,7 @@ public class CourseService {
         courseMapper.updateToEntity(dto, course);
         return courseMapper.toDto(courseRepository.save(course));
     }
-
+    //  DELETE
     public void deleteById(Long id) {
         if (!courseRepository.existsById(id)) {
             throw new CustomException(

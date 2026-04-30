@@ -14,8 +14,8 @@ public abstract class AbstractMapper<D,E> implements Mapper<D, E> {
     @Setter
     private ModelMapper modelMapper;
 
-    private  Class<D> dClass;
-    private  Class<E> eClass;
+    private final Class<D> dClass;
+    private final Class<E> eClass;
 
     public AbstractMapper(Class<D> dClass, Class<E> eClass) {
         this.dClass = dClass;

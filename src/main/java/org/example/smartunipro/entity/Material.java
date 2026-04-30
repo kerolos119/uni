@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.smartunipro.model.Auditable;
 
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,3 +29,4 @@ public class Material extends Auditable {
     private Course course;
 
 }
+
