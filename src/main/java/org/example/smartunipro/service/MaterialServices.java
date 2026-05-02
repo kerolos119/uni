@@ -33,13 +33,7 @@ public class MaterialServices {
 
         Material material = buildMaterialFromDto(request, new Material());
 
-        //  (تحويل courseId → Course)
-        Course course = courseRepo.findById(request.getCourseId())
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-        material.setCourse(course);
-        Material saved = repo.save(material);
-
-        return materialMapper.toDto(saved);
+        return materialMapper.toDto(repo.save(material));
     }
 
     // GET ALL
@@ -52,7 +46,8 @@ public class MaterialServices {
 
     //  GET BY ID
     public MaterialDto getById(Long id) {
-        return materialMapper.toDto(findOrThrow(id));
+        Material material = findOrThrow(id);
+        return materialMapper.toDto(material);
     }
 
     //  UPDATE
@@ -67,7 +62,7 @@ public class MaterialServices {
     //  DELETE
     public void delete(Long id) {
         if (!repo.existsById(id)) {
-            throw new RuntimeException("Material not found with id: " + id);
+            throw new CustomException("Material not found with id: " + id, HttpStatus.NOT_FOUND);
         }
         repo.deleteById(id);
     }

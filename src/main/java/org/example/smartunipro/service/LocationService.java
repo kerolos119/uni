@@ -25,60 +25,34 @@ public class LocationService {
     private final LocationRepository repo;
     private final LocationMapper locationMapper;
 
-    //  DTO → Entity
-    private Location convertToEntity(LocationDto dto) {
-        Location location = new Location();
-        location.setName(dto.getName());
-        location.setLatitude(dto.getLatitude());
-        location.setLongitude(dto.getLongitude());
-        return location;
-    }
 
-    //  Entity → DTO
-    private LocationDto convertToResponse(Location location) {
-        LocationDto response = new LocationDto();
-        response.setId(location.getId());
-        response.setName(location.getName());
-        response.setLatitude(location.getLatitude());
-        response.setLongitude(location.getLongitude());
-        return response;
-    }
 
     //  CREATE
     public LocationDto createLocation(@Valid LocationDto request) {
-        Location location = convertToEntity(request);
+        Location location = locationMapper.toEntity(request);
         return locationMapper.toDto(repo.save(location));
     }
 
     //  GET ALL
     public List<LocationDto> getAllLocations() {
         return repo.findAll().stream()
-                .map(this::convertToResponse)
+                .map(locationMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     // GET BY ID
     public LocationDto getById(Long id) {
-        return convertToResponse(findOrThrow(id));
+        return locationMapper.toDto(findOrThrow(id));
     }
 
     //  UPDATE
 
     public LocationDto update(Long id, @Valid LocationDto request) {
         Location location = findOrThrow(id);
+        locationMapper.updateToEntity(request, location);
 
-        if (request.getName() != null) {
-            location.setName(request.getName());
-        }
-        if (request.getLatitude() != null) {
-            location.setLatitude(request.getLatitude());
-        }
-        if (request.getLongitude() != null) {
-            location.setLongitude(request.getLongitude());
-        }
 
-        Location updatedLocation = repo.save(location);
-        return convertToResponse(updatedLocation);
+        return locationMapper.toDto(repo.save(location));
     }
 
     //  DELETE
