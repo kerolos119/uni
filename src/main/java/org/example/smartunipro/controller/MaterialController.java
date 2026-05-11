@@ -21,26 +21,22 @@ public class MaterialController {
     private final MaterialServices services;
 
 
-    //  CREATE
     @PostMapping("/upload")
     public ResponseEntity<MaterialDto> materialUpload(
             @Valid @RequestBody MaterialDto request) {
         return new ResponseEntity<>(services.materialUpload(request), HttpStatus.CREATED);
     }
 
-    //  GET ALL
     @GetMapping
     public ResponseEntity<List<MaterialDto>> getAllMaterial() {
         return ResponseEntity.ok(services.getAllMaterial());
     }
 
-    // GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<MaterialDto> getMaterialById(@PathVariable Long id) {
         return ResponseEntity.ok(services.getById(id));
     }
 
-    // UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<MaterialDto> update(
             @PathVariable Long id,
@@ -48,7 +44,6 @@ public class MaterialController {
         return ResponseEntity.ok(services.update(id, request));
     }
 
-    //  DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         services.delete(id);

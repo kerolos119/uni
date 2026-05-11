@@ -23,8 +23,11 @@ public class EnrollmentDto {
     private Long sessionId;
 
     private LocalDateTime EnrollmentDate;
+
     private String studentName;
+
     private String sessionName;
+
     private EnrollmentStatus status;
 
 }
