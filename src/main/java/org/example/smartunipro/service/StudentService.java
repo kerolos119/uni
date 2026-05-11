@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private final UserRepository    userRepository;
-    private final StudentMapper     studentMapper;
+    private final UserRepository userRepository;
+    private final StudentMapper studentMapper;
 
     public StudentDto createStudent(StudentDto dto) {
         if (studentRepository.existsByAcademicNumber(dto.getAcademicNumber())) {

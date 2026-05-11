@@ -4,6 +4,7 @@ package org.example.smartunipro.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.smartunipro.dto.SessionDto;
+import org.example.smartunipro.dto.SessionFilterDto;
 import org.example.smartunipro.service.SessionServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,11 @@ public class SessionController {
     public ResponseEntity<Void> deleteSession(@PathVariable Long id) {
         services.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<SessionDto>> getFiltered(
+            @ModelAttribute SessionFilterDto filter) {
+        return ResponseEntity.ok(services.getFiltered(filter));
     }
 }
