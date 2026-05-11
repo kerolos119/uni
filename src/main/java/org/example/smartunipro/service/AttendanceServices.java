@@ -27,7 +27,8 @@ public class AttendanceServices {
     private final StudentRepository    studentRepository;
     private final SessionRepository    sessionRepository;
     private final AttendanceMapper     attendanceMapper;
-
+    private final GPSService           gpsService;
+    private final QRService qrService;
 
     public AttendanceDto markByLocation(AttendanceDto dto) {
 
@@ -60,15 +61,27 @@ public class AttendanceServices {
         }
 
         Location sessionLocation = session.getLocation();
-        double distance = calculateDistance(
-                dto.getLatitude(),  dto.getLongitude(),
+        GPSService.AttendanceCheckResult result = gpsService.checkDistance(
+                dto.getLatitude(), dto.getLongitude(),
                 sessionLocation.getLatitude(), sessionLocation.getLongitude());
 
-        if (distance > ALLOWED_RADIUS_METERS) {
+        if (!result.withinRange()) {
             throw new CustomException(
-                    String.format("You are %.1f meters away from the session location. " +
-                            "Must be within %.0f meters.", distance, ALLOWED_RADIUS_METERS),
-                    HttpStatus.BAD_REQUEST);
+                    String.format("""
+            ❌ Attendance Denied!
+            
+            📍 Your distance: %.1f meters
+            ✅ Allowed distance: %.0f meters
+            🧭 Direction to building: %s
+            💡 Need to move: %.1f meters more
+            """,
+                            result.distance(),
+                            ALLOWED_RADIUS_METERS,
+                            result.direction(),
+                            result.distance() - ALLOWED_RADIUS_METERS
+                    ),
+                    HttpStatus.BAD_REQUEST
+            );
         }
 
         Status status = now.isAfter(session.getStartTime()
@@ -93,7 +106,22 @@ public class AttendanceServices {
                   + LATE_THRESHOLD_MINUTES + " minutes");
         return response;
     }
+    // أضف هذه الدالة الجديدة بعد markByLocation مباشرة
+    public AttendanceDto markByLocationAndQR(AttendanceDto dto) {
 
+        // ✅ 1. التحقق من QR Code
+        QRService.VerificationResult qrResult = qrService.verifyQR(
+                dto.getQrToken(),
+                dto.getSessionId()
+        );
+
+        if (!qrResult.isValid()) {
+            throw new CustomException(qrResult.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        // ✅ 2. الباقي نفس markByLocation بالضبط
+        return markByLocation(dto);
+    }
     public AttendanceDto createAttendance(AttendanceDto dto) {
 
         Student student = studentRepository.findById(dto.getStudentId())
@@ -176,15 +204,6 @@ public class AttendanceServices {
                         "Attendance not found with id: " + id, HttpStatus.NOT_FOUND));
     }
 
-    private double calculateDistance(double lat1, double lon1,
-                                     double lat2, double lon2) {
-        final int EARTH_RADIUS = 6371000; // meters
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return EARTH_RADIUS * c;
-    }
+
+
 }

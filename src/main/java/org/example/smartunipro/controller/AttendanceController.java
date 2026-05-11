@@ -17,6 +17,15 @@ public class AttendanceController {
 
     private final AttendanceServices attendanceServices;
 
+
+    @PostMapping("/mark-with-qr")
+    public ResponseEntity<AttendanceDto> markAttendanceWithQR(
+            @Valid @RequestBody AttendanceDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(attendanceServices.markByLocationAndQR(dto));
+    }
+
+
     @PostMapping("/mark")
     public ResponseEntity<AttendanceDto> markByLocation(
             @Valid @RequestBody AttendanceDto dto) {

@@ -53,7 +53,9 @@ public class LocationController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-}
+
+
+    }
 
 
 

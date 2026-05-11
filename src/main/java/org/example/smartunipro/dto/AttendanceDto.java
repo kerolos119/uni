@@ -29,7 +29,8 @@ public class AttendanceDto {
 
     @NotNull(message = "Longitude is required")
     private Double longitude;
-
+    @NotNull(message = "QR Token is required")
+    private String qrToken;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Status status;
 

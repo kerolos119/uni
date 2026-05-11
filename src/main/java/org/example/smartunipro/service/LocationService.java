@@ -26,7 +26,6 @@ public class LocationService {
     private final LocationMapper locationMapper;
 
 
-
     //  CREATE
     public LocationDto createLocation(@Valid LocationDto request) {
         Location location = locationMapper.toEntity(request);
@@ -62,6 +61,7 @@ public class LocationService {
         }
         repo.deleteById(id);
     }
+
 
 
     // ── Helpers ─────────────────────────────────────────────────────────────

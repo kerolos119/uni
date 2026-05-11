@@ -5,6 +5,7 @@ import org.example.smartunipro.model.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +16,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     List<Attendance> findBySession_Id(Long sessionId);
     List<Attendance> findBySession_IdAndStatus(Long sessionId, Status status);
     boolean existsByStudent_IdAndSession_Id(Long studentId, Long sessionId);
+
 }
