@@ -1,11 +1,9 @@
 package org.example.smartunipro.controller;
 
-
-import org.example.smartunipro.dto.MaterialDto;
-
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.smartunipro.dto.MaterialDto;
+import org.example.smartunipro.dto.MaterialFilterDto;
 import org.example.smartunipro.service.MaterialServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,6 @@ import java.util.List;
 public class MaterialController {
 
     private final MaterialServices services;
-
 
     @PostMapping("/upload")
     public ResponseEntity<MaterialDto> materialUpload(
@@ -49,5 +46,14 @@ public class MaterialController {
         services.delete(id);
         return ResponseEntity.noContent().build();
     }
-}
 
+    /**
+     * GET /api/materials/filter?title=lecture&courseId=1&hasPdf=true
+     *      &hasVideo=false&sortBy=title&sortDir=asc
+     */
+    @GetMapping("/filter")
+    public ResponseEntity<List<MaterialDto>> getFiltered(
+            @ModelAttribute MaterialFilterDto filter) {
+        return ResponseEntity.ok(services.getFiltered(filter));
+    }
+}

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(
         name = "enrollments",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"student_id", "session_id"})
+                @UniqueConstraint(columnNames = {"user_id", "session_id"})
         }
 )
 @Getter
@@ -31,9 +31,10 @@ public class Enrollment extends Auditable {
     @Column(name = "status", nullable = false)
     private EnrollmentStatus status = EnrollmentStatus.PENDING;
 
+    /** Student — must be a User with role = STUDENT */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id", nullable = false)

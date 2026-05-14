@@ -13,7 +13,12 @@ public class SessionMapper extends AbstractMapper<SessionDto, Session> {
 
     @Override
     public SessionDto toDto(Session session) {
-        SessionDto dto = super.toDto(session);
+        SessionDto dto = new SessionDto();
+        dto.setId(session.getId());
+        dto.setName(session.getName());
+        dto.setType(session.getType());
+        dto.setStartTime(session.getStartTime());
+        dto.setEndTime(session.getEndTime());
 
         if (session.getCourse() != null) {
             dto.setCourseId(session.getCourse().getId());
@@ -21,16 +26,12 @@ public class SessionMapper extends AbstractMapper<SessionDto, Session> {
         }
         if (session.getInstructor() != null) {
             dto.setInstructorId(session.getInstructor().getId());
-            // name comes from the linked User
-            if (session.getInstructor().getUser() != null) {
-                dto.setInstructorName(String.valueOf(session.getInstructor().getUser()));
-            }
+            dto.setInstructorName(session.getInstructor().getName());
         }
         if (session.getLocation() != null) {
             dto.setLocationId(session.getLocation().getId());
             dto.setLocationName(session.getLocation().getName());
         }
-
         return dto;
     }
 

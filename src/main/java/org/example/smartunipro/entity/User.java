@@ -29,4 +29,20 @@ public class User extends Auditable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    // ── STUDENT fields ────────────────────────────────────────────────────────
+
+    /** Unique academic number — required when role = STUDENT */
+    @Column(name = "academic_number", unique = true, length = 50)
+    private String academicNumber;
+
+    /** Study level — required when role = STUDENT */
+    @Column(length = 50)
+    private String level;
+
+    // ── INSTRUCTOR fields ─────────────────────────────────────────────────────
+
+    /** Department — required when role = INSTRUCTOR */
+    @Column(length = 100)
+    private String department;
 }

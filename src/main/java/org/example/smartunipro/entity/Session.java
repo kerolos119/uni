@@ -36,9 +36,10 @@ public class Session extends Auditable {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    /** Instructor — must be a User with role = INSTRUCTOR */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id", nullable = false)
-    private Instructor instructor;
+    private User instructor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)

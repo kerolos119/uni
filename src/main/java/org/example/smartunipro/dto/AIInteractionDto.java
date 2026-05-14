@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class AIInteractionDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime askedAt;
 
+    /** ID of a User with role = STUDENT */
     @NotNull(message = "Student ID is required")
     private Long studentId;
 

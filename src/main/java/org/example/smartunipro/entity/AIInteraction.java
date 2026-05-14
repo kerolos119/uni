@@ -27,7 +27,8 @@ public class AIInteraction extends Auditable {
     @Column(name = "asked_at", nullable = false)
     private LocalDateTime askedAt;
 
+    /** Student — must be a User with role = STUDENT */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User student;
 }

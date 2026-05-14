@@ -3,6 +3,7 @@ package org.example.smartunipro.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.smartunipro.dto.CourseDto;
+import org.example.smartunipro.dto.CourseFilterDto;
 import org.example.smartunipro.service.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,8 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDto> create(@Valid @RequestBody CourseDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.createCourse(dto));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseService.createCourse(dto));
     }
 
     @GetMapping
@@ -43,5 +45,12 @@ public class CourseController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         courseService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /** GET /api/courses/filter?name=math&code=MTH&sortBy=name&sortDir=asc */
+    @GetMapping("/filter")
+    public ResponseEntity<List<CourseDto>> getFiltered(
+            @ModelAttribute CourseFilterDto filter) {
+        return ResponseEntity.ok(courseService.getFiltered(filter));
     }
 }

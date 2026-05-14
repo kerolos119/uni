@@ -3,6 +3,7 @@ package org.example.smartunipro.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.smartunipro.dto.AttendanceDto;
+import org.example.smartunipro.dto.AttendanceFilterDto;
 import org.example.smartunipro.service.AttendanceServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,12 @@ public class AttendanceController {
 
     private final AttendanceServices attendanceServices;
 
-
     @PostMapping("/mark-with-qr")
     public ResponseEntity<AttendanceDto> markAttendanceWithQR(
             @Valid @RequestBody AttendanceDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(attendanceServices.markByLocationAndQR(dto));
     }
-
 
     @PostMapping("/mark")
     public ResponseEntity<AttendanceDto> markByLocation(
@@ -73,5 +72,16 @@ public class AttendanceController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         attendanceServices.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * GET /api/attendance/filter?studentId=1&sessionId=2&status=PRESENT
+     *      &timestampFrom=2025-01-01T08:00:00&timestampTo=2025-12-31T23:59:59
+     *      &sortBy=timestamp&sortDir=desc
+     */
+    @GetMapping("/filter")
+    public ResponseEntity<List<AttendanceDto>> getFiltered(
+            @ModelAttribute AttendanceFilterDto filter) {
+        return ResponseEntity.ok(attendanceServices.getFiltered(filter));
     }
 }

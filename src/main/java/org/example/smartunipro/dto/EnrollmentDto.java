@@ -6,9 +6,9 @@ import lombok.*;
 import org.example.smartunipro.model.EnrollmentStatus;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnrollmentDto {
@@ -16,18 +16,20 @@ public class EnrollmentDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
+    /** ID of a User with role = STUDENT */
     @NotNull(message = "Student ID is required")
     private Long studentId;
 
     @NotNull(message = "Session ID is required")
     private Long sessionId;
 
-    private LocalDateTime EnrollmentDate;
+    private LocalDateTime enrollmentDate;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String studentName;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String sessionName;
 
     private EnrollmentStatus status;
-
 }

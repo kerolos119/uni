@@ -1,7 +1,5 @@
 package org.example.smartunipro.mapper;
 
-import org.example.smartunipro.dto.InstructorDto;
-import org.example.smartunipro.entity.Instructor;
 import org.springframework.stereotype.Component;
 
 @Component

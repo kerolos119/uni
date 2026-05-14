@@ -1,13 +1,12 @@
 package org.example.smartunipro.controller;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.smartunipro.dto.LocationDto;
+import org.example.smartunipro.dto.LocationFilterDto;
 import org.example.smartunipro.service.LocationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
 public class LocationController {
 
     private final LocationService service;
-
 
     @PostMapping("/create")
     public ResponseEntity<LocationDto> createLocation(
@@ -49,8 +47,13 @@ public class LocationController {
         return ResponseEntity.noContent().build();
     }
 
-
+    /**
+     * GET /api/locations/filter?name=hall&minLatitude=30.0&maxLatitude=31.0
+     *      &minLongitude=31.0&maxLongitude=32.0&sortBy=name&sortDir=asc
+     */
+    @GetMapping("/filter")
+    public ResponseEntity<List<LocationDto>> getFiltered(
+            @ModelAttribute LocationFilterDto filter) {
+        return ResponseEntity.ok(service.getFiltered(filter));
     }
-
-
-
+}

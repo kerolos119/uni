@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class SessionDto {
@@ -20,6 +19,7 @@ public class SessionDto {
         @NotNull(message = "Location ID is required")
         private Long locationId;
 
+        /** ID of a User with role = INSTRUCTOR */
         @NotNull(message = "Instructor ID is required")
         private Long instructorId;
 
@@ -41,10 +41,12 @@ public class SessionDto {
         @Size(min = 3, max = 100, message = "Session name must be between 3 and 100 characters")
         private String name;
 
-
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private String courseName;
 
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private String instructorName;
 
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private String locationName;
 }

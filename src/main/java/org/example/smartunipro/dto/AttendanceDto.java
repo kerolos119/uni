@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttendanceDto {
@@ -18,6 +17,7 @@ public class AttendanceDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
+    /** ID of a User with role = STUDENT */
     @NotNull(message = "Student ID is required")
     private Long studentId;
 
@@ -29,17 +29,19 @@ public class AttendanceDto {
 
     @NotNull(message = "Longitude is required")
     private Double longitude;
+
     @NotNull(message = "QR Token is required")
     private String qrToken;
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Status status;
 
-
     private LocalDateTime timestamp;
 
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String studentName;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String sessionName;
 
     @Size(max = 500, message = "Message too long")
