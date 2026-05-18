@@ -28,12 +28,12 @@ public class GPSService {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = EARTH_RADIUS_METERS * c;
 
-        log.info("🌍 المسافة المحسوبة: {} متر", String.format("%.2f", distance));
+        log.info(" Calculated distance: {} meters", String.format("%.2f", distance));
         return distance;
     }
 
     /**
-     * 🧭 حساب الاتجاه من الطالب إلى المبنى
+     * Calculate the direction from the student to the building
      */
     public String calculateDirection(double lat1, double lon1,
                                      double lat2, double lon2) {
@@ -50,8 +50,8 @@ public class GPSService {
         bearing = (bearing + 360) % 360;
 
         String[] directions = {
-                "شمال ↑", "شمال شرق ↗", "شرق →", "جنوب شرق ↘",
-                "جنوب ↓", "جنوب غرب ↙", "غرب ←", "شمال غرب ↖"
+                "North ↑", "North East ↗", "East →", "South East ↘",
+                "South ↓", "South West ↙", "West ←", "North West ↖"
         };
 
         int index = (int) Math.round(bearing / 45) % 8;
@@ -59,7 +59,7 @@ public class GPSService {
     }
 
     /**
-     * 🎯 فحص المسافة والاتجاه معاً
+     * Check distance and direction together
      */
     public AttendanceCheckResult checkDistance(double studentLat, double studentLon,
                                                double buildingLat, double buildingLon) {
@@ -72,10 +72,10 @@ public class GPSService {
                 buildingLat, buildingLon);
 
         if (isWithinRange) {
-            log.info("✅ الطالب داخل النطاق: {} متر", String.format("%.1f", distance));
+            log.info(" Student is within range: {} meters", String.format("%.1f", distance));
         } else {
-            log.warn("❌ الطالب خارج النطاق: {} متر > 50 متر", String.format("%.1f", distance));
-            log.info("🧭 الاتجاه المطلوب: {}", direction);
+            log.warn(" Student is out of range: {} meters > 50 meters", String.format("%.1f", distance));
+            log.info(" Required direction: {}", direction);
         }
 
         return new AttendanceCheckResult(distance, isWithinRange, direction);

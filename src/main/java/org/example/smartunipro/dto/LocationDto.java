@@ -7,15 +7,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.example.smartunipro.model.Auditable;
 
 @Getter
 @Setter
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationDto {
-
-
+public class LocationDto extends Auditable {
 
 @JsonProperty(access =  JsonProperty.Access.READ_ONLY)
 private Long id;

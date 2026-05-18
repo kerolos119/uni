@@ -7,8 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 public abstract class AbstractMapper<D,E> implements Mapper<D, E> {
     @Autowired
     @Setter

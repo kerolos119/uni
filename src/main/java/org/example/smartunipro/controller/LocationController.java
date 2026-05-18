@@ -47,10 +47,7 @@ public class LocationController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * GET /api/locations/filter?name=hall&minLatitude=30.0&maxLatitude=31.0
-     *      &minLongitude=31.0&maxLongitude=32.0&sortBy=name&sortDir=asc
-     */
+
     @GetMapping("/filter")
     public ResponseEntity<List<LocationDto>> getFiltered(
             @ModelAttribute LocationFilterDto filter) {

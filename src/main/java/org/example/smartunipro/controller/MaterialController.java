@@ -47,10 +47,6 @@ public class MaterialController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * GET /api/materials/filter?title=lecture&courseId=1&hasPdf=true
-     *      &hasVideo=false&sortBy=title&sortDir=asc
-     */
     @GetMapping("/filter")
     public ResponseEntity<List<MaterialDto>> getFiltered(
             @ModelAttribute MaterialFilterDto filter) {

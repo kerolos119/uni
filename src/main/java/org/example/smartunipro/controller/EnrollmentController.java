@@ -46,10 +46,7 @@ public class EnrollmentController {
         return ResponseEntity.ok("Enrollment deleted successfully");
     }
 
-    /**
-     * GET /api/enrollments/filter?studentId=1&sessionId=2&status=ACTIVE
-     *      &enrollmentDateFrom=2025-01-01T00:00:00&sortBy=enrollmentDate&sortDir=desc
-     */
+
     @GetMapping("/filter")
     public ResponseEntity<List<EnrollmentDto>> getFiltered(
             @ModelAttribute EnrollmentFilterDto filter) {

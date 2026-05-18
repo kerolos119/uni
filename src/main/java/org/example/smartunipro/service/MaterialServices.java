@@ -30,41 +30,6 @@ public class MaterialServices extends FilterableService<Material, MaterialDto, M
     private final CourseRepository   courseRepository;
     private final MaterialMapper     materialMapper;
 
-    // ── FilterableService wiring ─────────────────────────────────────────────
-
-    @Override
-    protected List<String> sortableFields() {
-        return SORTABLE_FIELDS;
-    }
-
-    @Override
-    protected FilterableRepository<Material, ?> repository() {
-        return materialRepository;
-    }
-
-    @Override
-    protected Specification<Material> toSpec(MaterialFilterDto f) {
-        SpecificationBuilder<Material> builder = SpecificationBuilder.<Material>builder()
-                .like("title",      f.getTitle())
-                .equal("course.id", f.getCourseId())
-                .like("course.name", f.getCourseName());
-
-        // hasPdf: true → pdfUrl IS NOT NULL, false → IS NULL
-        if (Boolean.TRUE.equals(f.getHasPdf())) {
-            builder.isNotNull("pdfUrl");
-        } else if (Boolean.FALSE.equals(f.getHasPdf())) {
-            builder.isNull("pdfUrl");
-        }
-
-        // hasVideo: true → videoUrl IS NOT NULL, false → IS NULL
-        if (Boolean.TRUE.equals(f.getHasVideo())) {
-            builder.isNotNull("videoUrl");
-        } else if (Boolean.FALSE.equals(f.getHasVideo())) {
-            builder.isNull("videoUrl");
-        }
-
-        return builder.build();
-    }
 
     @Override
     protected MaterialDto toDto(Material entity) {
@@ -124,5 +89,42 @@ public class MaterialServices extends FilterableService<Material, MaterialDto, M
         return courseRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "Course not found with id: " + id, HttpStatus.NOT_FOUND));
+    }
+
+
+    // ── FilterableService wiring ─────────────────────────────────────────────
+
+    @Override
+    protected List<String> sortableFields() {
+        return SORTABLE_FIELDS;
+    }
+
+    @Override
+    protected FilterableRepository<Material, ?> repository() {
+        return materialRepository;
+    }
+
+    @Override
+    protected Specification<Material> toSpec(MaterialFilterDto f) {
+        SpecificationBuilder<Material> builder = SpecificationBuilder.<Material>builder()
+                .like("title",      f.getTitle())
+                .equal("course.id", f.getCourseId())
+                .like("course.name", f.getCourseName());
+
+        // hasPdf: true → pdfUrl IS NOT NULL, false → IS NULL
+        if (Boolean.TRUE.equals(f.getHasPdf())) {
+            builder.isNotNull("pdfUrl");
+        } else if (Boolean.FALSE.equals(f.getHasPdf())) {
+            builder.isNull("pdfUrl");
+        }
+
+        // hasVideo: true → videoUrl IS NOT NULL, false → IS NULL
+        if (Boolean.TRUE.equals(f.getHasVideo())) {
+            builder.isNotNull("videoUrl");
+        } else if (Boolean.FALSE.equals(f.getHasVideo())) {
+            builder.isNull("videoUrl");
+        }
+
+        return builder.build();
     }
 }

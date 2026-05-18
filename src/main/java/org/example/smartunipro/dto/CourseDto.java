@@ -3,12 +3,14 @@ package org.example.smartunipro.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.example.smartunipro.model.Auditable;
 
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseDto {
+public class CourseDto extends Auditable {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

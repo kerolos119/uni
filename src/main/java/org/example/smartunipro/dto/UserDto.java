@@ -5,13 +5,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.smartunipro.model.Auditable;
 import org.example.smartunipro.model.Role;
-
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto extends Auditable {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

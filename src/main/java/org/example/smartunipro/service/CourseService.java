@@ -26,31 +26,11 @@ public class CourseService extends FilterableService<Course, CourseDto, CourseFi
     private final CourseRepository courseRepository;
     private final CourseMapper     courseMapper;
 
-    // ── FilterableService wiring ─────────────────────────────────────────────
-
-    @Override
-    protected List<String> sortableFields() {
-        return SORTABLE_FIELDS;
-    }
-
-    @Override
-    protected FilterableRepository<Course, ?> repository() {
-        return courseRepository;
-    }
-
-    @Override
-    protected Specification<Course> toSpec(CourseFilterDto f) {
-        return SpecificationBuilder.<Course>builder()
-                .like("name", f.getName())
-                .like("code", f.getCode())
-                .build();
-    }
 
     @Override
     protected CourseDto toDto(Course entity) {
         return courseMapper.toDto(entity);
     }
-
     // ── CRUD ─────────────────────────────────────────────────────────────────
 
     public CourseDto createCourse(CourseDto dto) {
@@ -92,4 +72,27 @@ public class CourseService extends FilterableService<Course, CourseDto, CourseFi
         }
         courseRepository.deleteById(id);
     }
+
+
+    // ── FilterableService wiring ─────────────────────────────────────────────
+
+    @Override
+    protected List<String> sortableFields() {
+        return SORTABLE_FIELDS;
+    }
+
+    @Override
+    protected FilterableRepository<Course, ?> repository() {
+        return courseRepository;
+    }
+
+    @Override
+    protected Specification<Course> toSpec(CourseFilterDto f) {
+        return SpecificationBuilder.<Course>builder()
+                .like("name", f.getName())
+                .like("code", f.getCode())
+                .build();
+    }
+
+
 }

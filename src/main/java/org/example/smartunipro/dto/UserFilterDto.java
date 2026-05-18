@@ -10,4 +10,9 @@ public class UserFilterDto extends FilterDto {
     private String name;
     private String email;
     private Role   role;
+    // STUDENT fields
+    private String academicNumber;
+    private String level;
+    // INSTRUCTOR fields
+    private String department;
 }

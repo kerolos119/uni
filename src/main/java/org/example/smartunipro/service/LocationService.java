@@ -28,28 +28,7 @@ public class LocationService extends FilterableService<Location, LocationDto, Lo
     private final LocationRepository locationRepository;
     private final LocationMapper     locationMapper;
 
-    // ── FilterableService wiring ─────────────────────────────────────────────
 
-    @Override
-    protected List<String> sortableFields() {
-        return SORTABLE_FIELDS;
-    }
-
-    @Override
-    protected FilterableRepository<Location, ?> repository() {
-        return locationRepository;
-    }
-
-    @Override
-    protected Specification<Location> toSpec(LocationFilterDto f) {
-        return SpecificationBuilder.<Location>builder()
-                .like("name",                    f.getName())
-                .greaterThanOrEqual("latitude",  f.getMinLatitude())
-                .lessThanOrEqual("latitude",     f.getMaxLatitude())
-                .greaterThanOrEqual("longitude", f.getMinLongitude())
-                .lessThanOrEqual("longitude",    f.getMaxLongitude())
-                .build();
-    }
 
     @Override
     protected LocationDto toDto(Location entity) {
@@ -93,5 +72,28 @@ public class LocationService extends FilterableService<Location, LocationDto, Lo
         return locationRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "Location not found with id: " + id, HttpStatus.NOT_FOUND));
+    }
+
+    // ── FilterableService wiring ─────────────────────────────────────────────
+
+    @Override
+    protected List<String> sortableFields() {
+        return SORTABLE_FIELDS;
+    }
+
+    @Override
+    protected FilterableRepository<Location, ?> repository() {
+        return locationRepository;
+    }
+
+    @Override
+    protected Specification<Location> toSpec(LocationFilterDto f) {
+        return SpecificationBuilder.<Location>builder()
+                .like("name",                    f.getName())
+                .greaterThanOrEqual("latitude",  f.getMinLatitude())
+                .lessThanOrEqual("latitude",     f.getMaxLatitude())
+                .greaterThanOrEqual("longitude", f.getMinLongitude())
+                .lessThanOrEqual("longitude",    f.getMaxLongitude())
+                .build();
     }
 }

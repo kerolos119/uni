@@ -34,22 +34,6 @@ public class EnrollmentService extends FilterableService<Enrollment, EnrollmentD
     private final SessionRepository    sessionRepository;
     private final EnrollmentMapper     enrollmentMapper;
 
-    // ── FilterableService ─────────────────────────────────────────────────────
-
-    @Override protected List<String> sortableFields() { return SORTABLE_FIELDS; }
-    @Override protected FilterableRepository<Enrollment, ?> repository() { return enrollmentRepository; }
-    @Override protected EnrollmentDto toDto(Enrollment e) { return enrollmentMapper.toDto(e); }
-
-    @Override
-    protected Specification<Enrollment> toSpec(EnrollmentFilterDto f) {
-        return SpecificationBuilder.<Enrollment>builder()
-                .equal("student.id",  f.getStudentId())
-                .equal("session.id",  f.getSessionId())
-                .equal("status",      f.getStatus())
-                .greaterThanOrEqual("enrollmentDate", f.getEnrollmentDateFrom())
-                .lessThanOrEqual("enrollmentDate",    f.getEnrollmentDateTo())
-                .build();
-    }
 
     // ── CRUD ──────────────────────────────────────────────────────────────────
 
@@ -109,5 +93,23 @@ public class EnrollmentService extends FilterableService<Enrollment, EnrollmentD
         return enrollmentRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "Enrollment not found with id: " + id, HttpStatus.NOT_FOUND));
+    }
+
+
+    // ── FilterableService ─────────────────────────────────────────────────────
+
+    @Override protected List<String> sortableFields() { return SORTABLE_FIELDS; }
+    @Override protected FilterableRepository<Enrollment, ?> repository() { return enrollmentRepository; }
+    @Override protected EnrollmentDto toDto(Enrollment e) { return enrollmentMapper.toDto(e); }
+
+    @Override
+    protected Specification<Enrollment> toSpec(EnrollmentFilterDto f) {
+        return SpecificationBuilder.<Enrollment>builder()
+                .equal("student.id",  f.getStudentId())
+                .equal("session.id",  f.getSessionId())
+                .equal("status",      f.getStatus())
+                .greaterThanOrEqual("enrollmentDate", f.getEnrollmentDateFrom())
+                .lessThanOrEqual("enrollmentDate",    f.getEnrollmentDateTo())
+                .build();
     }
 }

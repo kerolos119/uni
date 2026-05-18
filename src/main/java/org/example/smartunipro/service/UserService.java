@@ -30,25 +30,6 @@ public class UserService extends FilterableService<User, UserDto, UserFilterDto>
     private final UserMapper      userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    // ── FilterableService wiring ─────────────────────────────────────────────
-
-    @Override
-    protected List<String> sortableFields() { return SORTABLE_FIELDS; }
-
-    @Override
-    protected FilterableRepository<User, ?> repository() { return userRepository; }
-
-    @Override
-    protected Specification<User> toSpec(UserFilterDto f) {
-        return SpecificationBuilder.<User>builder()
-                .like("name",           f.getName())
-                .like("email",          f.getEmail())
-                .equal("role",          f.getRole())
-                .like("academicNumber", f.getAcademicNumber())
-                .like("level",          f.getLevel())
-                .like("department",     f.getDepartment())
-                .build();
-    }
 
     @Override
     protected UserDto toDto(User entity) { return userMapper.toDto(entity); }
@@ -213,5 +194,26 @@ public class UserService extends FilterableService<User, UserDto, UserFilterDto>
         return userRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "User not found with id: " + id, HttpStatus.NOT_FOUND));
+    }
+
+
+    // ── FilterableService wiring ─────────────────────────────────────────────
+
+    @Override
+    protected List<String> sortableFields() { return SORTABLE_FIELDS; }
+
+    @Override
+    protected FilterableRepository<User, ?> repository() { return userRepository; }
+
+    @Override
+    protected Specification<User> toSpec(UserFilterDto f) {
+        return SpecificationBuilder.<User>builder()
+                .like("name",           f.getName())
+                .like("email",          f.getEmail())
+                .equal("role",          f.getRole())
+                .like("academicNumber", f.getAcademicNumber())
+                .like("level",          f.getLevel())
+                .like("department",     f.getDepartment())
+                .build();
     }
 }

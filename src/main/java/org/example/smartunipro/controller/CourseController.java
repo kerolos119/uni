@@ -47,7 +47,6 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
-    /** GET /api/courses/filter?name=math&code=MTH&sortBy=name&sortDir=asc */
     @GetMapping("/filter")
     public ResponseEntity<List<CourseDto>> getFiltered(
             @ModelAttribute CourseFilterDto filter) {

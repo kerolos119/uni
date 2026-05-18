@@ -30,26 +30,6 @@ public class SessionServices extends FilterableService<Session, SessionDto, Sess
     private final LocationRepository locationRepository;
     private final SessionMapper      sessionMapper;
 
-    // ── FilterableService ─────────────────────────────────────────────────────
-
-    @Override protected List<String> sortableFields() { return SORTABLE_FIELDS; }
-    @Override protected FilterableRepository<Session, ?> repository() { return sessionRepository; }
-    @Override protected SessionDto toDto(Session e) { return sessionMapper.toDto(e); }
-
-    @Override
-    protected Specification<Session> toSpec(SessionFilterDto f) {
-        return SpecificationBuilder.<Session>builder()
-                .like("name",               f.getName())
-                .equal("type",              f.getType())
-                .equal("course.id",         f.getCourseId())
-                .equal("instructor.id",     f.getInstructorId())
-                .equal("location.id",       f.getLocationId())
-                .greaterThanOrEqual("startTime", f.getStartTimeFrom())
-                .lessThanOrEqual("startTime",    f.getStartTimeTo())
-                .greaterThanOrEqual("endTime",   f.getEndTimeFrom())
-                .lessThanOrEqual("endTime",      f.getEndTimeTo())
-                .build();
-    }
 
     // ── CRUD ──────────────────────────────────────────────────────────────────
 
@@ -123,5 +103,27 @@ public class SessionServices extends FilterableService<Session, SessionDto, Sess
         return locationRepository.findById(id)
                 .orElseThrow(() -> new CustomException(
                         "Location not found with id: " + id, HttpStatus.NOT_FOUND));
+    }
+
+
+    // ── FilterableService ─────────────────────────────────────────────────────
+
+    @Override protected List<String> sortableFields() { return SORTABLE_FIELDS; }
+    @Override protected FilterableRepository<Session, ?> repository() { return sessionRepository; }
+    @Override protected SessionDto toDto(Session e) { return sessionMapper.toDto(e); }
+
+    @Override
+    protected Specification<Session> toSpec(SessionFilterDto f) {
+        return SpecificationBuilder.<Session>builder()
+                .like("name",               f.getName())
+                .equal("type",              f.getType())
+                .equal("course.id",         f.getCourseId())
+                .equal("instructor.id",     f.getInstructorId())
+                .equal("location.id",       f.getLocationId())
+                .greaterThanOrEqual("startTime", f.getStartTimeFrom())
+                .lessThanOrEqual("startTime",    f.getStartTimeTo())
+                .greaterThanOrEqual("endTime",   f.getEndTimeFrom())
+                .lessThanOrEqual("endTime",      f.getEndTimeTo())
+                .build();
     }
 }

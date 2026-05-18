@@ -3,15 +3,16 @@ package org.example.smartunipro.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.example.smartunipro.model.Auditable;
 import org.example.smartunipro.model.SessionType;
 
 import java.time.LocalDateTime;
-
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SessionDto {
+public class SessionDto extends Auditable {
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         private Long id;

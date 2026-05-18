@@ -33,6 +33,7 @@ public class AttendanceMapper extends AbstractMapper<AttendanceDto, Attendance> 
 
     @Override
     public Attendance updateToEntity(AttendanceDto dto, Attendance entity) {
+        // Only status is updatable after the fact
         if (dto.getStatus() != null) entity.setStatus(dto.getStatus());
         return entity;
     }
